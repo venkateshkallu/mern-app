@@ -3,14 +3,15 @@ import { useEffect, useState } from 'react';
 function Home() {
   const [products, setProducts] = useState([]);
 
-  // ✅ Load base API URL from .env (VITE_)
-  const apiBaseUrl = import.meta.env.VITE_API_URL;
+  const apiBaseUrl = process.env.REACT_APP_API_URL;
 
-  // ✅ Fetch products from backend
  useEffect(() => {
   fetch(`${apiBaseUrl}/products`)
     .then(res => res.json())
-    .then(data => setProducts(data))
+    .then(data => {
+      console.log("Fetched products:", data);
+      setProducts(data);
+    })
     .catch(err => console.error("Error fetching products:", err));
 }, [apiBaseUrl]);
 
