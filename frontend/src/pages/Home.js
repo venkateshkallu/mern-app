@@ -3,15 +3,18 @@ import { useEffect, useState } from 'react';
 function Home() {
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/products")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Fetched products:", data);
-        setProducts(data);
-      })
-      .catch((err) => console.error("Error fetching products:", err));
-  }, []);
+ useEffect(() => {
+  const apiBase = import.meta.env.VITE_API_URL;
+
+  fetch(`${apiBase}/products`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Fetched products:", data);
+      setProducts(data);
+    })
+    .catch((err) => console.error("Error fetching products:", err));
+}, []);
+
 
   return (
     <div style={{ padding: '2rem' }}>
