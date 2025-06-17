@@ -7,12 +7,12 @@ function Home() {
   const apiBaseUrl = import.meta.env.VITE_API_URL;
 
   // ✅ Fetch products from backend
-  useEffect(() => {
-    fetch(`${apiBaseUrl}/products`)
-      .then(res => res.json())
-      .then(data => setProducts(data))
-      .catch(err => console.error("❌ Error fetching products:", err));
-  }, [apiBaseUrl]); // ✅ Include apiBaseUrl as a dependency
+ useEffect(() => {
+  fetch(`${apiBaseUrl}/products`)
+    .then(res => res.json())
+    .then(data => setProducts(data))
+    .catch(err => console.error("Error fetching products:", err));
+}, [apiBaseUrl]);
 
   return (
     <div style={{ padding: '2rem' }}>
