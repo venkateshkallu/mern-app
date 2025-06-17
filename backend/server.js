@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const productRoutes = require('./routes/productRoutes'); // ✅ Only keep this one
 require('dotenv').config();
 
-const app = express();
+const app = express(); // ✅ This must be declared BEFORE using `app`
 
-// ✅ Allowed origins for CORS (update with your actual frontend domains)
+// ✅ Allowed origins for CORS
 const allowedOrigins = [
   'http://localhost:3000',
   'https://mern-app-phi-five.vercel.app',
@@ -13,27 +14,18 @@ const allowedOrigins = [
   'https://mern-pewwdottk-venkateshkallus-projects.vercel.app'
 ];
 
-// ✅ CORS middleware configuration
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
-
-// ✅ JSON parser
+// ✅ Middleware
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 
-// ✅ Test route
-app.get('/', (req, res) => {
-  res.send('API is working ✅');
-});
+// ✅ Routes
+app.get('/', (req, res) => res.send('API is working ✅'));
+app.use('/api/products', productRoutes); // ✅ Use the imported routes here
 
-// ✅ MongoDB connection using environment variable
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('✅ MongoDB connected'))
-.catch(err => console.error('❌ MongoDB connection error:', err));
+// ✅ MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // ✅ Start Express server
 const PORT = process.env.PORT || 5000;

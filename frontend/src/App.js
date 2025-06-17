@@ -1,25 +1,20 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import React, { useState } from 'react';
+import Home from './pages/Home';
 
 function App() {
-  const [message, setMessage] = useState('');
+  const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    fetch('/')
-      .then((res) => res.text())
-      .then((data) => setMessage(data))
-      .catch((err) => console.error('Error fetching:', err));
-  }, []);
+  const addToCart = (product) => {
+    setCart(prev => [...prev, product]);
+  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>{message ? message : 'Loading...'}</p>
-      </header>
+      <h1>🛍️ Mini E-Commerce</h1>
+      <Home addToCart={addToCart} />
+      <h3>🧺 Cart: {cart.length} item(s)</h3>
     </div>
   );
 }
 
 export default App;
-
-
